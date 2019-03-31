@@ -36,6 +36,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_Debug_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -52,6 +63,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <EditBox name="$parent_SlashCmd_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
         <Size x="200" y="26"/>
@@ -90,6 +112,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_Prunning_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -104,6 +137,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <Slider name="$parent_Prunning_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="90" minValue="30" maxValue="120">
         <Size x="200" y="20"/>
@@ -133,6 +177,13 @@
           </Layer>
         </Layers>
         <Scripts>
+		 <OnValueChanged>
+           if not self._onsetting then
+             self._onsetting = true
+             self:SetValue(self:GetValue())
+             self._onsetting = false
+           else return end             
+          </OnValueChanged>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_MP_Prunning_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
@@ -142,6 +193,15 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <Button name="$parent_Reset_GUI_Button" inherits="GameMenuButtonTemplate" hidden="false" test="FIXME!">
+        <Size x="200" y="22"/>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_Prunning_Slider" relativePoint="BOTTOMLEFT" y="-10"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_Options_MainPanel_ResetGUIPos();</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_MainPanel_OnLoad(self);</OnLoad>
@@ -176,6 +236,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_Log10MenRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -190,6 +261,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_LogLFRRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -204,6 +286,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -218,10 +311,71 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogClassicRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogAVRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Classic raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogBCRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogClassicRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Burning Crusade raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_LogWotLKRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogAVRaids_CB" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogBCRaids_CB" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -232,10 +386,122 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
+      <CheckButton name="$parent_LogCataclysmRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWotLKRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Cataclysm raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogPandariaRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogCataclysmRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Pandaria raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogWarlordsRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogPandariaRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Warlords of Draenor raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>      
+      <CheckButton name="$parent_LogLootModePersonal_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWarlordsRaids_CB" y="-25"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track personal loot mode (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      
       <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_LogWotLKRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogLootModePersonal_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -246,6 +512,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
     </Frames>
     <Scripts>
@@ -262,7 +539,7 @@
         </FontString>
         <FontString name="$parent_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L)Only track items equal or above Itemlevel">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-160"/>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-176"/>
           </Anchors>
         </FontString>
         <!--
@@ -313,6 +590,13 @@
           </Layer>
         </Layers>
         <Scripts>
+		 <OnValueChanged>
+           if not self._onsetting then
+             self._onsetting = true
+             self:SetValue(self:GetValue())
+             self._onsetting = false
+           else return end             
+          </OnValueChanged>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
@@ -335,13 +619,47 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_AskForDKPValuePersonal_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT" x="16" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="... if loot mode personal (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <Slider name="$parent_MinItemQualityToGetCost_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
         <Size x="200" y="20"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT">
-            <Offset y="-20"/>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValuePersonal_CB" relativePoint="BOTTOMLEFT" x="-16" y="-16"/>
         </Anchors>
         <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
           <EdgeSize>
@@ -371,6 +689,13 @@
           </Layer>
         </Layers>
         <Scripts>
+         <OnValueChanged>
+           if not self._onsetting then
+             self._onsetting = true
+             self:SetValue(self:GetValue())
+             self._onsetting = false
+           else return end             
+         </OnValueChanged>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
@@ -400,6 +725,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_IgnoreEnchantingMats_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -414,6 +750,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_IgnoreGems_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
@@ -428,6 +775,17 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
       </CheckButton>
     </Frames>
     <Scripts>
@@ -477,6 +835,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <CheckButton name="$parent_OfflinePlayers" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
@@ -493,6 +862,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <CheckButton name="$parent_GA_CB" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
@@ -507,6 +887,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <CheckButton name="$parent_GA_NoAuto_CB" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
@@ -521,6 +912,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <CheckButton name="$parent_GA_UseTrigger_CB" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
@@ -535,6 +937,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <EditBox name="$parent_GA_Trigger_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
                 <Size x="200" y="26"/>
@@ -587,6 +1000,13 @@
                   </Layer>
                 </Layers>
                 <Scripts>
+			 <OnValueChanged>
+			   if not self._onsetting then
+				 self._onsetting = true
+				 self:SetValue(self:GetValue())
+				 self._onsetting = false
+			   else return end             
+			  </OnValueChanged>
                   <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_AP_GADuration_Slider(); end)</OnMouseDown>
                   <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
                 </Scripts>
@@ -609,6 +1029,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <ScrollFrame name="$parent_GA_CustomText_EB_Scrollframe" inherits="UIPanelScrollFrameTemplate">
                 <Size x="300" y="80"/>
@@ -718,6 +1149,17 @@
                     </FontString>
                   </Layer>
                 </Layers>
+                <Scripts>
+                    <OnClick>
+                        local enable = self:GetChecked()
+                        self:SetChecked(enable and true or false)
+                        if enable then
+                            PlaySound(856)
+                        else
+                            PlaySound(857)
+                        end
+                    </OnClick>
+                </Scripts>
               </CheckButton>
               <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
@@ -769,6 +1211,15 @@
                   </Layer>
                 </Layers>
                 <Scripts>
+                  <OnClick>
+                    local enable = self:GetChecked()
+                    self:SetChecked(enable and true or false)
+                    if enable then
+                        PlaySound(856)
+                    else
+                        PlaySound(857)
+                    end
+                  </OnClick>
                   <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
                   <OnLeave>MRT_Options_HideTT();</OnLeave>
                 </Scripts>

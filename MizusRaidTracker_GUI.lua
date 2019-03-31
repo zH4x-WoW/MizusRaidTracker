@@ -1,10 +1,10 @@
 -- ********************************************************
 -- **              Mizus RaidTracker - GUI               **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **              <http://cosmocanyon.de>               **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2013)
+--    * Mîzukichan @ EU-Antonidas (2010-2018)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -21,6 +21,11 @@
 --    You should have received a copy of the GNU General Public License
 --    along with Mizus RaidTracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
+
+
+-- Check for addon table
+if (not MizusRaidTracker) then MizusRaidTracker = {}; end
+local mrt = MizusRaidTracker
 
 
 --------------
@@ -69,7 +74,16 @@ local MRT_BossLootTableColDef = {
                 --MRT_Debug("self:GetCell(realrow, column) = "..self:GetCell(realrow, column));
                 local itemId = self:GetCell(realrow, column);
                 local itemTexture = GetItemIcon(itemId); 
-                cellFrame:SetBackdrop( { bgFile = itemTexture } );
+                --cellFrame:SetBackdrop( { bgFile = itemTexture } );            -- put this back in, if and when SetBackdrop can handle texture IDs
+                if not (cellFrame.cellItemTexture) then
+                    cellFrame.cellItemTexture = cellFrame:CreateTexture();
+                end
+                cellFrame.cellItemTexture:SetTexture(itemTexture);
+                cellFrame.cellItemTexture:SetTexCoord(0, 1, 0, 1);
+                cellFrame.cellItemTexture:Show();
+                cellFrame.cellItemTexture:SetPoint("CENTER", cellFrame.cellItemTexture:GetParent(), "CENTER");
+                cellFrame.cellItemTexture:SetWidth(30);
+                cellFrame.cellItemTexture:SetHeight(30);
             end
             -- tooltip handling
             local itemLink = self:GetCell(realrow, 6);
@@ -221,6 +235,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_MakeAttendanceCheck_Button:SetText(MRT_L.GUI["Button_MakeGuildAttendanceCheck"]);
     MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
     MRT_GUIFrame_ResumeLastRaid_Button:SetText(MRT_L.GUI["Button_ResumeLastRaid"]);
+    -- Create difficulty drop down menu
+    mrt:UI_CreateTwoRowDDM()
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
     -- Create and anchor drop down menu table for add/modify loot dialog
@@ -240,6 +256,57 @@ function MRT_GUI_ParseValues()
             return true;
         end
     });
+end
+
+function mrt:UI_CreateTwoRowDDM()
+    -- Create DropDownFrame
+    if (not MRT_GUI_TwoRowDialog_DDM) then
+        CreateFrame("Frame", "MRT_GUI_TwoRowDialog_DDM", MRT_GUI_TwoRowDialog, "MRT_Lib_UIDropDownMenuTemplate")
+        MRT_GUI_TwoRowDialog_DDM:CreateFontString("MRT_GUI_TwoRowDialog_DDM_Text", "OVERLAY", "ChatFontNormal")
+    end
+    -- List of DropDownMenuItems
+    local items = {
+        { [16] = select(1, GetDifficultyInfo(16)).." (20)" },
+        { [15] = select(1, GetDifficultyInfo(15)).." (30)" },
+        { [14] = select(1, GetDifficultyInfo(14)).." (30)" },
+        { [17] = select(1, GetDifficultyInfo(17)).." (30)" },
+        { [9] = select(1, GetDifficultyInfo(9)) },
+        { [4] = select(1, GetDifficultyInfo(4)) },
+        { [3] = select(1, GetDifficultyInfo(3)) },
+    }
+    -- Anchor DropDownFrame
+    MRT_GUI_TwoRowDialog_DDM:ClearAllPoints();
+    MRT_GUI_TwoRowDialog_DDM:SetPoint("TOP", MRT_GUI_TwoRowDialog_EB1, "TOP", -4, -64);
+    MRT_GUI_TwoRowDialog_DDM_Text:ClearAllPoints();
+    MRT_GUI_TwoRowDialog_DDM_Text:SetPoint("BOTTOMLEFT", MRT_GUI_TwoRowDialog_DDM, "TOPLEFT", 14, 0);
+    MRT_GUI_TwoRowDialog_DDM:Show();
+    -- Click handler function
+    local function OnClick(self)
+       MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_GUI_TwoRowDialog_DDM, self:GetID())
+    end
+    -- DropDownMenu initialize function
+    local function initialize(self, level)
+        local info = MRT_Lib_UIDropDownMenu_CreateInfo()
+        for k2, v2 in ipairs(items) do
+            for k, v in pairs(v2) do
+                info = MRT_Lib_UIDropDownMenu_CreateInfo()
+                info.text = v
+                info.value = k
+                info.func = OnClick
+                MRT_Lib_UIDropDownMenu_AddButton(info, level)
+            end
+        end
+    end
+    -- Setup DropDownMenu
+    MRT_Lib_UIDropDownMenu_Initialize(MRT_GUI_TwoRowDialog_DDM, initialize);
+    MRT_Lib_UIDropDownMenu_SetWidth(MRT_GUI_TwoRowDialog_DDM, 236);
+    MRT_Lib_UIDropDownMenu_SetButtonWidth(MRT_GUI_TwoRowDialog_DDM, 260);
+    MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_GUI_TwoRowDialog_DDM, 3);
+    MRT_Lib_UIDropDownMenu_JustifyText(MRT_GUI_TwoRowDialog_DDM, "LEFT");
+    -- Setup text
+    MRT_GUI_TwoRowDialog_DDM_Text:SetText(MRT_L.GUI["Raid size"])
+    -- Hide element
+    MRT_GUI_TwoRowDialog_DDM:Hide();
 end
 
 
@@ -368,10 +435,6 @@ function MRT_GUI_BossAddAccept(raidnum)
         MRT_Print(MRT_L.GUI["No boss name entered"]);
         return;
     end
-    if (difficulty ~= "N" and difficulty ~= "H") then
-        MRT_Print(MRT_L.GUI["No valid difficulty entered"]);
-        return;
-    end
     if (enteredTime == "") then
         -- check if there is an active raid
         if (MRT_NumOfCurrentRaid == nil) then
@@ -425,14 +488,9 @@ function MRT_GUI_BossAddAccept(raidnum)
         bossdata["Players"] = {};
         bossdata["Name"] = bossname;
         bossdata["Date"] = bossTimestamp;
-        if (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
-            bossdata["Difficulty"] = 1;
-        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
-            bossdata["Difficulty"] = 3;
-        elseif (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
-            bossdata["Difficulty"] = 2;
-        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
-            bossdata["Difficulty"] = 4;
+        bossdata["Difficulty"] = MRT_RaidLog[raidnum]["DiffID"];
+        if (difficulty == "H" and (bossdata["Difficulty"] == 3 or bossdata["Difficulty"] == 4)) then
+            bossdata["Difficulty"] = bossdata["Difficulty"] + 2;
         end
         -- search position in RaidLog (based on time) and insert data
         if (#MRT_RaidLog[raidnum]["Bosskills"] > 0) then
@@ -907,7 +965,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         end
     else
         MRT_LootInfo["ItemCount"] = 1;
-        MRT_LootInfo["Time"] = time();
+        MRT_LootInfo["Time"] = MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Date"] + 15;
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
         -- notify registered, external functions
         if (#MRT_ExternalLootNotifier > 0) then
@@ -1102,14 +1160,12 @@ function MRT_GUI_StartNewRaid()
         return;
     end
     MRT_GUI_TwoRowDialog_Title:SetText(MRT_L.GUI["Button_StartNewRaid"]);
+    MRT_GUI_TwoRowDialog_DDM:Show();
     MRT_GUI_TwoRowDialog_EB1_Text:SetText(MRT_L.GUI["Zone name"]);
     MRT_GUI_TwoRowDialog_EB1:SetText("");
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB1, "StartNewRaid_ZoneNameEB"); end);
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
-    MRT_GUI_TwoRowDialog_EB2_Text:SetText(MRT_L.GUI["Raid size"]);
-    MRT_GUI_TwoRowDialog_EB2:SetText("");
-    MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB2, "StartNewRaid_RaidSizeEB"); end);
-    MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
+    MRT_GUI_TwoRowDialog_EB2:Hide();
     MRT_GUI_TwoRowDialog_OKButton:SetText(MRT_L.Core["MB_Ok"]);
     MRT_GUI_TwoRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_StartNewRaidAccept(); end);
     MRT_GUI_TwoRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
@@ -1117,15 +1173,10 @@ function MRT_GUI_StartNewRaid()
 end
 
 function MRT_GUI_StartNewRaidAccept()
+    local diffIDList = { 16, 15, 14, 17, 9, 4, 3 }
     local zoneName = MRT_GUI_TwoRowDialog_EB1:GetText()
-    local raidSize = MRT_GUI_TwoRowDialog_EB2:GetText()
-    -- sanity check entered values
-    if (raidSize == "") then raidSize = 25; end
-    raidSize = tonumber(raidSize);
-    if (not raidSize) then 
-        MRT_Print(MRT_L.GUI["No valid raid size"]); 
-        return;
-    end
+    local diffId = diffIDList[MRT_Lib_UIDropDownMenu_GetSelectedID(MRT_GUI_TwoRowDialog_DDM)]
+    local raidSize = mrt.raidSizes[diffId]
     -- Hide dialogs
     MRT_GUI_HideDialogs();
     -- check current raidstatus is ok
@@ -1142,7 +1193,7 @@ function MRT_GUI_StartNewRaidAccept()
         zoneName = GetRealZoneText();
     end
     -- create new raid
-    MRT_CreateNewRaid(zoneName, raidSize);
+    MRT_CreateNewRaid(zoneName, raidSize, diffId);
     MRT_GUI_CompleteTableUpdate();
 end
 
@@ -1306,12 +1357,18 @@ function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
     if (raidnum) then MRT_BosskillsCount = #MRT_RaidLog[raidnum]["Bosskills"]; end;
     if (raidnum and MRT_BosskillsCount) then
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
-            if not v["Difficulty"] then
+            if (not v["Difficulty"]) then
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], "-"};
-            elseif (v["Difficulty"] > 2) then
-                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
-            else
-                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+            elseif (tContains(mrt.diffIDsNormal, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY1};
+            elseif (tContains(mrt.diffIDsHeroic, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY2};
+            elseif (v["Difficulty"] == 8) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY5};
+            elseif (v["Difficulty"] == 16) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY6};
+            elseif (tContains(mrt.diffIDsLFR, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI.Cell_LFR};
             end
         end
     end
@@ -1384,10 +1441,12 @@ function MRT_GUI_HideDialogs()
     MRT_GUI_OneRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_OneRowDialog_EB1:SetScript("OnLeave", nil);
     MRT_GUI_OneRowDialog:Hide();
+    MRT_GUI_TwoRowDialog_DDM:Hide();
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", nil);
     MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", nil);
     MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", nil);
+    MRT_GUI_TwoRowDialog_EB2:Show();
     MRT_GUI_TwoRowDialog:Hide();
     MRT_GUI_ThreeRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_ThreeRowDialog_EB1:SetScript("OnLeave", nil);

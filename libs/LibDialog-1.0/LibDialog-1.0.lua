@@ -8,14 +8,12 @@
 -----------------------------------------------------------------------
 -- Upvalued Lua API.
 -----------------------------------------------------------------------
-local _G = getfenv(0)
-
 -- Functions
 local error = _G.error
 local pairs = _G.pairs
+local tonumber = _G.tonumber
 
 -- Libraries
-local math = _G.math
 local table = _G.table
 
 -----------------------------------------------------------------------
@@ -26,7 +24,7 @@ local MAJOR = "LibDialog-1.0"
 
 _G.assert(LibStub, MAJOR .. " requires LibStub")
 
-local MINOR = 2 -- Should be manually increased
+local MINOR = 8 -- Should be manually increased
 local lib, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not lib then
@@ -94,6 +92,18 @@ local DEFAULT_DIALOG_BACKDROP = {
     },
 }
 
+local TEXT_HORIZONTAL_JUSTIFICATIONS = {
+    CENTER = "CENTER",
+    LEFT = "LEFT",
+    RIGHT = "RIGHT",
+}
+
+local TEXT_VERTICAL_JUSTIFICATIONS = {
+    BOTTOM = "BOTTOM",
+    MIDDLE = "MIDDLE",
+    TOP = "TOP",
+}
+
 -----------------------------------------------------------------------
 -- Upvalues.
 -----------------------------------------------------------------------
@@ -105,13 +115,11 @@ local active_dialogs = lib.active_dialogs
 local active_buttons = lib.active_buttons
 local active_checkboxes = lib.active_checkboxes
 local active_editboxes = lib.active_editboxes
-local active_icons = lib.active_icons
 
 local dialog_heap = lib.dialog_heap
 local button_heap = lib.button_heap
 local checkbox_heap = lib.checkbox_heap
 local editbox_heap = lib.editbox_heap
-local icon_heap = lib.icon_heap
 
 -----------------------------------------------------------------------
 -- Helper functions.
@@ -172,6 +180,7 @@ end
 local function _ReleaseCheckBox(checkbox)
     checkbox.container:Hide()
     _RecycleWidget(checkbox, active_checkboxes, checkbox_heap)
+    checkbox.container:ClearAllPoints()
     checkbox.container:SetParent(nil)
 end
 
@@ -220,7 +229,11 @@ end
 local function _Dialog_OnShow(dialog)
     local delegate = dialog.delegate
 
-    _G.PlaySound("igMainMenuOpen")
+    if not delegate then
+        return
+    end
+
+    _G.PlaySound(SOUNDKIT.IG_MAINMENU_OPEN, "Master")
 
     if delegate.on_show then
         delegate.on_show(dialog, dialog.data)
@@ -228,17 +241,24 @@ local function _Dialog_OnShow(dialog)
 end
 
 local function _Dialog_OnHide(dialog)
-    local delegate = dialog.delegate
-
-    _G.PlaySound("igMainMenuClose")
+    _G.PlaySound(SOUNDKIT.IG_MAINMENU_CLOSE, "Master")
 
     -- Required so lib:ActiveDialog() will return false if called from code which is called from the delegate's on_hide
     _RecycleWidget(dialog, active_dialogs, dialog_heap)
 
+    local delegate = dialog.delegate
     if delegate.on_hide then
         delegate.on_hide(dialog, dialog.data)
     end
+
     _ReleaseDialog(dialog)
+
+    if #delegate_queue > 0 then
+        local delegate
+        repeat
+            delegate = _ProcessQueue()
+        until not delegate
+    end
 end
 
 local function _Dialog_OnUpdate(dialog, elapsed)
@@ -250,8 +270,8 @@ local function _Dialog_OnUpdate(dialog, elapsed)
         if remaining <= 0 then
             dialog.time_remaining = nil
 
-            if delegate.on_cancel then
-                delegate.oncancel(dialog, dialog.data, "timeout")
+            if delegate and delegate.on_cancel then
+                delegate.on_cancel(dialog, dialog.data, "timeout")
             end
             dialog:Hide()
             return
@@ -259,7 +279,7 @@ local function _Dialog_OnUpdate(dialog, elapsed)
         dialog.time_remaining = remaining
     end
 
-    if delegate.on_update then
+    if delegate and delegate.on_update then
         delegate.on_update(dialog, elapsed)
     end
 end
@@ -387,6 +407,15 @@ local function EditBox_OnEscapePressed(editbox)
     end
 end
 
+local function EditBox_OnShow(editbox)
+    local dialog = editbox:GetParent()
+    local on_show = dialog.delegate.editboxes[editbox:GetID()].on_show
+
+    if on_show then
+        on_show(editbox, dialog.data)
+    end
+end
+
 local function EditBox_OnTextChanged(editbox, user_input)
     if not editbox.autoCompleteParams or not _G.AutoCompleteEditBox_OnTextChanged(editbox, user_input) then
         local dialog = editbox:GetParent()
@@ -398,7 +427,7 @@ local function EditBox_OnTextChanged(editbox, user_input)
     end
 end
 
-local function _AcquireEditBox(parent, index)
+local function _AcquireEditBox(dialog, index)
     local editbox = table.remove(editbox_heap)
 
     if not editbox then
@@ -437,15 +466,16 @@ local function _AcquireEditBox(parent, index)
 
         editbox:SetScript("OnEnterPressed", EditBox_OnEnterPressed)
         editbox:SetScript("OnEscapePressed", EditBox_OnEscapePressed)
+        editbox:SetScript("OnShow", EditBox_OnShow)
         editbox:SetScript("OnTextChanged", EditBox_OnTextChanged)
     end
-    local template = parent.delegate.editboxes[index]
+    local template = dialog.delegate.editboxes[index]
 
     active_editboxes[#active_editboxes + 1] = editbox
 
     editbox.addHighlightedText = true
 
-    editbox:SetParent(parent)
+    editbox:SetParent(dialog)
     editbox:SetID(index)
     editbox:SetWidth(template.width or DEFAULT_EDITBOX_WIDTH)
 
@@ -465,6 +495,7 @@ local function _AcquireEditBox(parent, index)
         editbox.label:Hide()
     end
     editbox:Show()
+
     return editbox
 end
 
@@ -535,6 +566,7 @@ local function _BuildDialog(delegate, data)
 
         local close_button = _G.CreateFrame("Button", nil, dialog, "UIPanelCloseButton")
         close_button:SetPoint("TOPRIGHT", -3, -3)
+        close_button:Hide()
 
         dialog.close_button = close_button
 
@@ -547,15 +579,25 @@ local function _BuildDialog(delegate, data)
     dialog:Reset()
     dialog.delegate = delegate
     dialog.data = data
+
     dialog.text:SetText(delegate.text or "")
+    dialog.text:SetJustifyH(delegate.text_justify_h and TEXT_HORIZONTAL_JUSTIFICATIONS[delegate.text_justify_h:upper()] or "CENTER")
+    dialog.text:SetJustifyV(delegate.text_justify_v and TEXT_VERTICAL_JUSTIFICATIONS[delegate.text_justify_v:upper()] or "MIDDLE")
+
+    if delegate.no_close_button then
+        dialog.close_button:Hide()
+    else
+        dialog.close_button:Show()
+    end
 
     if _G.type(delegate.icon) == "string" then
         if not dialog.icon then
             dialog.icon = dialog:CreateTexture(("%sIcon"):format(dialog:GetName()), "ARTWORK")
-            dialog.icon:SetWidth(DEFAULT_ICON_SIZE)
-            dialog.icon:SetHeight(DEFAULT_ICON_SIZE)
-            dialog.icon:SetPoint("RIGHT", dialog.text, "LEFT", -5, 0)
+            dialog.icon:SetPoint("LEFT", dialog, "LEFT", 16, 0)
         end
+
+        local icon_size = tonumber(delegate.icon_size) and delegate.icon_size or DEFAULT_ICON_SIZE
+        dialog.icon:SetSize(icon_size, icon_size)
         dialog.icon:SetTexture(delegate.icon)
         dialog.icon:Show()
     elseif dialog.icon then
@@ -617,19 +659,9 @@ local function _BuildDialog(delegate, data)
             local editbox = dialog.editboxes[index]
 
             if index == 1 then
-                if editbox.label:IsShown() then
-                    editbox:SetPoint("TOPLEFT", dialog.text, "BOTTOM", 0, -8)
-                else
-                    editbox:SetPoint("TOP", dialog.text, "BOTTOM", 0, -8)
-                end
+                editbox:SetPoint("TOP", dialog.text, "BOTTOM", 0, -8)
             else
-                local spacing = 8 + (editbox:GetHeight() * (index - 1))
-
-                if editbox.label:IsShown() then
-                    editbox:SetPoint("TOPLEFT", dialog.text, "BOTTOM", 0, -spacing)
-                else
-                    editbox:SetPoint("TOP", dialog.text, "BOTTOM", 0, -spacing)
-                end
+                editbox:SetPoint("TOP", dialog.editboxes[index - 1], "BOTTOM", 0, 0)
             end
         end
     end
@@ -740,7 +772,7 @@ function lib:Spawn(reference, data)
 
             if dialog.delegate.is_exclusive then
                 if dialog.delegate.on_cancel then
-                    dialog.delegate.oncancel(dialog, dialog.data, "override")
+                    dialog.delegate.on_cancel(dialog, dialog.data, "override")
                 end
                 dialog:Hide()
             end
@@ -761,7 +793,7 @@ function lib:Spawn(reference, data)
                         dialog:Hide()
 
                         if dialog.delegate.on_cancel then
-                            dialog.delegate.oncancel(dialog, dialog.data, "override")
+                            dialog.delegate.on_cancel(dialog, dialog.data, "override")
                         end
                     end
                 end
@@ -876,6 +908,10 @@ end
 
 function dialog_prototype:Resize()
     local delegate = self.delegate
+    if not delegate then
+        return
+    end
+
     local width = delegate.width or DEFAULT_DIALOG_WIDTH
     local height = delegate.height or 0
 
@@ -935,9 +971,9 @@ function dialog_prototype:Resize()
     end
 
     if self.icon and self.icon:IsShown() then
-        local icon_width = DEFAULT_ICON_SIZE * 1.75
+        local icon_width = self.icon:GetWidth() + 32
         width = width + icon_width
-        self.text:SetWidth(width - (icon_width * 2))
+        self.text:SetWidth(width - icon_width - (self.close_button:GetWidth() + 16))
     else
         self.text:SetWidth(width - 60)
     end

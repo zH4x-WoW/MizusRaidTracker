@@ -1,0 +1,18 @@
+tag 58ce5a9c77322b567f1c46f035364a56066a7d32 v0.81.2
+Author:	Mizukichan <mizukichan@arcor.de>
+Date:	Sat Jan 26 15:59:36 2019 +0100
+
+Tagging as v0.81.2
+
+commit 962c950c04632ffa4bb605a66bcf1307bbab825f
+Author: Mizukichan <mizukichan@arcor.de>
+Date:   Sat Jan 26 15:59:06 2019 +0100
+
+    Fixed export error when trying to export a raid in the EQdkp/MLdkp1.1 format
+
+commit 308514248f84af3661bec44d0604b8a771755f20
+Author: Mizukichan <mizukichan@arcor.de>
+Date:   Sat Jan 26 15:43:17 2019 +0100
+
+    Reverted libST updated due to some reported compatibility problems with other addons (Issue #74)
+

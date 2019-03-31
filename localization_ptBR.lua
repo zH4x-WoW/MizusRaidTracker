@@ -1,14 +1,18 @@
 -- ********************************************************
 -- **           Mizus RaidTracker - ptBR Local           **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **             <http://cosmocanyon.de>                **
 -- ********************************************************
 --
 -- This localization is written by:
---  <NOBODY>
+--  boux2
 --
 -- Note: 
 --  MRT requires a correct localization of bossyells for working
 --
+
+-- Check for addon table
+if (not MizusRaidTracker) then return; end
+local _L = MizusRaidTracker._L
 
 ----------------------
 --  Are you local?  --
@@ -19,305 +23,305 @@ if GetLocale() ~= "ptBR" then return end
 -----------------
 --  Bossyells  --
 -----------------
-MRT_L.Bossyells = {
-    -- Naxxramas
-    [535] = {
-        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",
-    },
+-- Yells/Ulduar
+	_L.yells[529]["Algalon"] = "Já vi mundos banhados pelas chamas dos Criadores, seus habitantes desaparecendo sem sequer um gemido. Sistemas planetários inteiros nascem e são destruídos no tempo que leva para seus corações mortais para baterem uma vez. No entanto, durante todo o tempo, meu coração desprovido de emoção ... de empatia. Eu. Sinto. Nada. Um milhão de vidas desperdiçadas. Todos eles tinham dentro de si a sua tenacidade? Todos eles amavam a vida como você?"
+	_L.yells[529]["Freya"] = "Seu domínio sobre mim se dissipa. Eu posso ver claramente mais uma vez. Obrigado heróis."
+	_L.yells[529]["Hodir"] = "Eu... Eu estou livre do seu alcance... finalmente."
+	_L.yells[529]["Mimiron"] = "Parece que cometi um ligeiro erro de cálculo. Eu permiti que minha mente fosse corrompida pelo demônio na prisão, anulando minha diretiva primária. Todos os sistemas parecem estar funcionais agora. Livre."
+	_L.yells[529]["Thorim"] = "Baixem as armas! Eu me rendo!"
 
-    -- Ulduar
-    [529] = {
-        ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals."] = "Iron Council",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "Iron Council",  -- Hardmode - Steelbreaker last
-        ["I... I am released from his grasp... at last."] = "Hodir",
-        ["Stay your arms! I yield!"] = "Thorim",
-        ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
-        ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
-        ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "Algalon the Observer",
-    },
-    
-    -- Trial of the Crusader
-    [543] = {
-        ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
-    },
-    
-    -- Icecrown Citadel
-    [604] = {
-        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Icecrown Gunship Battle", -- Muradin
-        ["The Alliance falter. Onward to the Lich King!"] = "Icecrown Gunship Battle", -- Saurfang
-        ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
-    },
-    
-    -- Ruby Sanctum
-    [609] = {
-        ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
-    },
-    
-    -- Throne of the Four Winds
-    [773] = {
-        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
-    },
-    
-    -- Firelands
-    [800] = {
-        ["Too soon! ... You have come too soon..."] = "Ragnaros",
-    },
-    
-    -- Terrace of Endless Spring
-    [886] = {
-        --["Não. .. as águas ... Eu devo ... resistir ... Eu não deve ... medo ..."] = "Protetores do Infinito",
-        ["Eu agradeço, forasteiros. Eu fui libertado."] = "Tsulong", 
-        ["Eu... ah... oh! Eu o quê...? Eu fiz o quê...? Estava tudo tão... tão turvo..."] = "Lei Shi",
-    },
-}
+-- Yells/Trials_of_the_Crusader
+	_L.yells[543]["Faction Champions"] = "Uma vitória superficial e trágica. Somos mais fracos como um todo pelas perdas sofridas hoje. Quem, a não ser o Lich King, poderia se beneficiar dessa tolice? Grandes guerreiros perderam suas vidas. E para quê? A verdadeira ameaça está à frente - o Lich Rei nos aguarda na morte."
+
+-- Yells/Icecrown_Citadel
+	_L.yells[604]["Dreamwalker"] = [=[
+EU ESTOU RENOVADO! Ysera conceda-me o favor de colocar essas criaturas sujas para descansar!]=]
+	_L.yells[604]["Icecrown Gunship Battle Alliance"] = "Não digam que eu não avisei, canalhas! Avante, irmãos e irmãs!"
+	_L.yells[604]["Icecrown Gunship Battle Horde"] = "A Aliança vacila. Avante ao Lich Rei!"
+
+-- Yells/Ruby_Sanctum
+	_L.yells[609]["Halion"] = "Aprecie esta vitória, mortais, pois será a última. Este mundo vai queimar com o retorno do mestre!"
+
+-- Yells/Throne_of_the_Four_Winds
+	_L.yells[773]["Conclave Of Wind"] = "O Conclave do Vento se dissipou. Sua conduta e determinação honrosas lhe valeram o direito de enfrentar-me em batalha, mortais. Aguardo seu ataque na minha plataforma! Venham!"
+
+-- Yells/Firelands
+	_L.yells[800]["Ragnaros"] = "Cedo demais! ... Vocês vieram cedo demais ..."
+
+-- Yells/Terrace_of_Endless_Spring
+	_L.yells[886]["Lei Shi"] = "Eu... ah... oh! Eu fiz ...? Eu estava...? Estava... tão... turvo..."
+	_L.yells[886]["Tsulong"] = "Eu agradeço, estranhos. Eu fui libertado."
+
+-- Yells/Siege_of_Orgrimmar
+	_L.yells[953]["Immerseus"] = "Ah, você conseguiu! As águas são puras mais uma vez."
+	_L.yells[953]["Spoils of Pandaria"] = "Sistema reiniciando. Não desligue a energia, ou a coisa toda provavelmente explodirá."
+
+-- Yells/Hellfire_Citadel
+	_L.yells[1026]["Hellfire Assault"] = "Se você quer que algo fique bem feito, então faça você mesmo..."
+
 
 
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
--- MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank"
--- MRT_L.Core["DKP_Frame_Cancel_Button"] = "Cancel"
--- MRT_L.Core["DKP_Frame_Cost"] = "Cost"
--- MRT_L.Core["DKP_Frame_Delete_Button"] = "Delete"
--- MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Disenchanted"
--- MRT_L.Core["DKP_Frame_EnterCostFor"] = "Enter cost for"
--- MRT_L.Core["DKP_Frame_LootetBy"] = "looted by |cFFFFFFFF%s|r."
--- MRT_L.Core["DKP_Frame_Note"] = "Note"
--- MRT_L.Core["DKP_Frame_OK_Button"] = "Ok"
--- MRT_L.Core["DKP_Frame_Title"] = "Enter cost"
---[==[ MRT_L.Core["Export_AttendanceNote"] = [=[In the Raid-Log-Import-Settings, please set the option
+-- MRT_L/Core
+	MRT_L.Core["DKP_Frame_Bank_Button"] = "Banco"
+	MRT_L.Core["DKP_Frame_Cancel_Button"] = "Cancelar"
+	MRT_L.Core["DKP_Frame_Cost"] = "Custo"
+	MRT_L.Core["DKP_Frame_Delete_Button"] = "Excluir"
+	MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Desencantado"
+	MRT_L.Core["DKP_Frame_EnterCostFor"] = "Insira o custo para"
+	MRT_L.Core["DKP_Frame_LootetBy"] = "saqueado por |cFFFFFFFF%s|r."
+	MRT_L.Core["DKP_Frame_Note"] = "Nota"
+	MRT_L.Core["DKP_Frame_OK_Button"] = "Ok"
+	MRT_L.Core["DKP_Frame_Title"] = "Insira o custo"
+	MRT_L.Core["Export_AttendanceNote"] = [=[Em "Raid-Log-Import-Settings", por favor, selecione a opção:
 "Time in seconds, the loot belongs to the boss before."
-to or below 180 seconds to avoid attendance issues.]=] ]==]
--- MRT_L.Core["Export_Attendees"] = "Attendees"
--- MRT_L.Core["Export_Button"] = "Close"
---[==[ MRT_L.Core["Export_Explanation"] = [=[Press Ctrl+C to copy the data to the clipboard.
-Press Ctrl+V to import data in your webbrowser.]=] ]==]
--- MRT_L.Core["Export_Frame_Title"] = "Data export"
--- MRT_L.Core["Export_Heroic"] = "Heroic"
--- MRT_L.Core["Export_Loot"] = "Loot"
--- MRT_L.Core["Export_Normal"] = "Normal"
--- MRT_L.Core["GuildAttendanceAddNotice"] = "%s added %s to the boss attendee list."
--- MRT_L.Core["GuildAttendanceAnnounceText"] = "Whisper me your mains name to be added to the DKP list."
--- MRT_L.Core["GuildAttendanceAnnounceText2"] = "Whisper me with '%s' to be added to the DKP list."
--- MRT_L.Core["GuildAttendanceBossDownText"] = "%s down!"
--- MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check"
--- MRT_L.Core["GuildAttendanceFailNotice"] = "%s failed to add %s to the boss attendee list."
--- MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
--- MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutes remaining."
--- MRT_L.Core["GuildAttendanceReply"] = "Added %s to DKP list."
--- MRT_L.Core["GuildAttendanceReplyFail"] = "%s is already in DKP list."
--- MRT_L.Core["GuildAttendanceTimeUpText"] = "If you haven't whispered me by now, you're too late."
--- MRT_L.Core["LDB Left-click to toggle the raidlog browser"] = "Left-click to toggle the raidlog browser"
--- MRT_L.Core["LDB Right-click to open the options menu"] = "Right-click to open the options menu"
--- MRT_L.Core["MB_Cancel"] = "Cancel"
--- MRT_L.Core["MB_No"] = "No"
--- MRT_L.Core["MB_Ok"] = "Ok"
--- MRT_L.Core["MB_Yes"] = "Yes"
--- MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Error: Active raid in progress. No snapshot taken."
--- MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken."
--- MRT_L.Core["TakeSnapshot_NotInRaidError"] = "Error: You are not in a raid. No snapshot taken."
--- MRT_L.Core["Trash Mob"] = "Trash Mob"
+para 180 segundos ou menos, afim de evitar problemas na frequência.]=]
+	MRT_L.Core["Export_Attendees"] = "Participantes"
+	MRT_L.Core["Export_Button"] = "Fechar"
+	MRT_L.Core["Export_Explanation"] = [=[Pressione Ctrl + C para copiar os dados para a área de transferência.
+Pressione Ctrl + V para importar dados no seu navegador.]=]
+	MRT_L.Core["Export_Frame_Title"] = "Exportar dados"
+	MRT_L.Core["Export_Heroic"] = "Heróico"
+	MRT_L.Core["Export_Loot"] = "Saque"
+	MRT_L.Core["Export_Normal"] = "Normal"
+	MRT_L.Core["GuildAttendanceAddNotice"] = "%s adicionado %s na lista de participantes do chefe."
+	MRT_L.Core["GuildAttendanceAnnounceText"] = "Sussurre-me o nome do seu personagem principal para ser adicionado à lista DKP."
+	MRT_L.Core["GuildAttendanceAnnounceText2"] = "Sussurre-me com '%s' para ser adicionado à lista DKP."
+	MRT_L.Core["GuildAttendanceBossDownText"] = "%s derrotado!"
+	MRT_L.Core["GuildAttendanceBossEntry"] = "Verificação de frequência"
+	MRT_L.Core["GuildAttendanceFailNotice"] = "%s falhou em adicionar %s à lista de participantes."
+	MRT_L.Core["GuildAttendanceMsgBox"] = "%s derrotado. Realizar verificação de frequência agora?"
+	MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutos restantes."
+	MRT_L.Core["GuildAttendanceReply"] = "%s adicionado à lista de DKP."
+	MRT_L.Core["GuildAttendanceReplyFail"] = "%s já está na lista DKP."
+	MRT_L.Core["GuildAttendanceTimeUpText"] = "Se você não me sussurrou, agora é tarde demais."
+	MRT_L.Core["LDB Left-click to toggle the raidlog browser"] = "Clique com o botão esquerdo para alternar o navegador de \"raidlog\""
+	MRT_L.Core["LDB Right-click to open the options menu"] = "Clique com o botão direito para abrir o menu de opções"
+	MRT_L.Core["MB_Cancel"] = "Cancelar"
+	MRT_L.Core["MB_No"] = "Não"
+	MRT_L.Core["MB_Ok"] = "Ok"
+	MRT_L.Core["MB_Yes"] = "Sim"
+	MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Erro: Raide ativa ainda em progresso. Nenhum \"snapshot\" feito."
+	MRT_L.Core["TakeSnapshot_Done"] = "\"Snapshot\" feito."
+	MRT_L.Core["TakeSnapshot_NotInRaidError"] = "Erro: Você não está em raid. Nenhum \"snapshot\" feito."
+	MRT_L.Core["Trash Mob"] = "\"Trash Mob\""
 
 
 
 -----------------------------------
 --  Option panels local strings  --
 -----------------------------------
--- MRT_L.Options["AP_GroupRestriction"] = "Track only first 2/5 groups"
--- MRT_L.Options["AP_GuildAttendance"] = "Enable guild attendance check"
--- MRT_L.Options["AP_GuildAttendanceCustomTextTitle"] = "Custom guild attendance text:"
--- MRT_L.Options["AP_GuildAttendanceDuration"] = "Duration of taking attendance"
--- MRT_L.Options["AP_GuildAttendanceNoAuto"] = "Ask for confirmation"
--- MRT_L.Options["AP_GuildAttendanceTrigger"] = "Trigger"
--- MRT_L.Options["AP_GuildAttendanceUseCustomText"] = "Use custom guild attendance text"
--- MRT_L.Options["AP_GuildAttendanceUseTrigger"] = "Use trigger instead of character name"
--- MRT_L.Options["AP_Minutes"] = "minutes"
--- MRT_L.Options["AP_Title"] = "Attendance"
--- MRT_L.Options["AP_TitleText"] = "MRT - Attendance options"
--- MRT_L.Options["AP_TrackOfflinePlayers"] = "Track offline players"
--- MRT_L.Options["EP_AllXMLExportsTitle"] = "All XML export formats"
--- MRT_L.Options["EP_BBCode"] = "BBCode formatted Text"
--- MRT_L.Options["EP_BBCode_wowhead"] = "BBCode formatted Text with wowhead links"
--- MRT_L.Options["EP_ChooseExport_Title"] = "Export format"
---[==[ MRT_L.Options["EP_CTRT_AddPoorItem"] = [=[Enable boss encounter detection fix for the
-EQdkp(-Plus) CT_RaidTrackerImport 1.16.x]=] ]==]
--- MRT_L.Options["EP_CTRT_compatible"] = "EQdkp / MLdkp 1.1 (CT RaidTracker compatible)"
--- MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"] = "Ignore per boss attendance"
---[==[ MRT_L.Options["EP_CTRT_RLIAttendanceFix"] = [=[Enable attendance fix for the 
-EQdkp-Plus Raid-Log-Import 0.5.6.x]=] ]==]
--- MRT_L.Options["EP_CTRTTitleText"] = "CTRT compatible export settings"
--- MRT_L.Options["EP_Currency"] = "Currency"
--- MRT_L.Options["EP_DKPBoard"] = "DKPBoard"
--- MRT_L.Options["EP_EnglishExport"] = "Export zone names and boss names in english"
--- MRT_L.Options["EP_EQDKP_Plus_XML"] = "EQdkp-Plus XML"
--- MRT_L.Options["EP_EQDKPTitleText"] = "EQdkp-Plus XML settings"
--- MRT_L.Options["EP_HTML"] = "CSS based HTML with wowhead links"
--- MRT_L.Options["EP_MLDKP_15"] = "MLdkp 1.5"
--- MRT_L.Options["EP_Plain_Text"] = "Plain Text"
--- MRT_L.Options["EP_SetDateTimeFormat"] = "Set format of date and time"
--- MRT_L.Options["EP_TextExportTitleText"] = "Text export settings"
--- MRT_L.Options["EP_Title"] = "Export"
--- MRT_L.Options["EP_TitleText"] = "MRT - Export options"
--- MRT_L.Options["ITP_AutoFocus_Always"] = "Always"
--- MRT_L.Options["ITP_AutoFocus_Never"] = "Never"
--- MRT_L.Options["ITP_AutoFocus_NoCombat"] = "When not in combat"
--- MRT_L.Options["ITP_AutoFocus_Title"] = "AutoFocus on loot cost dialog"
--- MRT_L.Options["ITP_IgnoreEnchantingMats"] = "Ignore enchanting materials"
--- MRT_L.Options["ITP_IgnoreGems"] = "Ignore gems"
--- MRT_L.Options["ITP_Title"] = "Item tracking"
--- MRT_L.Options["ITP_TitleText"] = "MRT - Item tracking options"
--- MRT_L.Options["ITP_UseEPGP_GP_Values"] = "Use EPGP GP values"
--- MRT_L.Options["MP_AutoPrunning"] = "Automatically delete raids older than"
--- MRT_L.Options["MP_Days"] = "days"
--- MRT_L.Options["MP_Debug"] = "Enable debug messages"
--- MRT_L.Options["MP_Description"] = "Tracks raids, loot and attendance"
--- MRT_L.Options["MP_Enabled"] = "Enable automatic tracking"
--- MRT_L.Options["MP_MinimapIcon"] = "Show minimap icon"
--- MRT_L.Options["MP_SlashCmd"] = "Slash command"
--- MRT_L.Options["TP_AskForDKPValue"] = "Ask for item cost"
--- MRT_L.Options["TP_CreateNewRaidOnNewZone"] = "Create new raid on new zone"
--- MRT_L.Options["TP_Log10MenRaids"] = "Track 10 player raids"
--- MRT_L.Options["TP_LogAVRaids"] = "Track PVP raids (VoA, BH)"
--- MRT_L.Options["TP_LogLFRRaids"] = "Track LFR raids"
--- MRT_L.Options["TP_LogWotLKRaids"] = "Track WotLK raids"
--- MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost for"
--- MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "Min item quality to log"
--- MRT_L.Options["TP_OnlyTrackItemsAbove"] = "Only track items equal or above Itemlevel"
--- MRT_L.Options["TP_OnlyTrackItemsBelow"] = "or equal or below Itemlevel"
--- MRT_L.Options["TP_Title"] = "Raid tracking"
--- MRT_L.Options["TP_TitleText"] = "MRT - Raid tracking options"
--- MRT_L.Options["TP_UseServerTime"] = "Use server time"
---[==[ MRT_L.Options["TT_AP_GA_CustomText"] = [=[Available variables:
-<<BOSS>> - Name of the boss event
-<<TIME>> - Remaining time of the guild attendance check
-<<TRIGGER>> - The custom trigger command]=] ]==]
---[==[ MRT_L.Options["TT_EP_AddPoorItem"] = [=[This option changes the loot export a bit to fix the boss encounter detection 
-of the CT_RaidTrackerImport. Use this, if you have boss events 
-in your raid without loot associated to it. (e.g. attendance checks).]=] ]==]
---[==[ MRT_L.Options["TT_EP_DateTimeTT"] = [=[ %d - day of the month [01-31] 
- %m - month [01-12] 
- %y - two-digit year [00-99] 
- %Y - full year 
+-- MRT_L/Options
+	MRT_L.Options["AP_GroupRestriction"] = "Acompanhar apenas os primeiros 2/4/5/6 grupos"
+	MRT_L.Options["AP_GuildAttendance"] = "Ativar verificação de freqüência da guilda"
+	MRT_L.Options["AP_GuildAttendanceCustomTextTitle"] = "Texto de freqüência da guilda personalizado:"
+	MRT_L.Options["AP_GuildAttendanceDuration"] = "Duração para realizar freqüência"
+	MRT_L.Options["AP_GuildAttendanceNoAuto"] = "Pedir confirmação"
+	MRT_L.Options["AP_GuildAttendanceTrigger"] = "Gatilho"
+	MRT_L.Options["AP_GuildAttendanceUseCustomText"] = "Usar texto de freqüência da guilda personalizado"
+	MRT_L.Options["AP_GuildAttendanceUseTrigger"] = "Usar o gatilho em vez do nome do personagem"
+	MRT_L.Options["AP_Minutes"] = "minutos"
+	MRT_L.Options["AP_Title"] = "Freqüência"
+	MRT_L.Options["AP_TitleText"] = "MRT - Opções de comparecimento"
+	MRT_L.Options["AP_TrackOfflinePlayers"] = "Acompanhar jogadores desconectados"
+	MRT_L.Options["EP_AllXMLExportsTitle"] = "Todos os formatos de exportação XML"
+	MRT_L.Options["EP_BBCode"] = "Texto BBCode formatado"
+	MRT_L.Options["EP_BBCode_wowhead"] = "Texto BBCode formatado com links do wowhead"
+	MRT_L.Options["EP_ChooseExport_Title"] = "Formato de exportação"
+	MRT_L.Options["EP_CTRT_AddPoorItem"] = [=[Ativar a correção de detecção de encontro de chefe para o 
+EQdkp (-Plus) CT_RaidTrackerImport 1.16.x]=]
+	MRT_L.Options["EP_CTRT_compatible"] = "EQdkp / MLdkp 1.1 (Compatível com CT RaidTracker)"
+	MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"] = "Ignorar frequência por chefe"
+	MRT_L.Options["EP_CTRT_RLIAttendanceFix"] = [=[Ativar correção de frequência para o
+EQdkp-Plus Raid-Log-Import 0.5.6.x]=]
+	MRT_L.Options["EP_CTRTTitleText"] = [=[
+Configurações de exportação compatíveis com CTRT]=]
+	MRT_L.Options["EP_Currency"] = "Moeda"
+	MRT_L.Options["EP_DKPBoard"] = "Quadro DKP"
+	MRT_L.Options["EP_EnglishExport"] = "Exportar nomes de zonas e nomes de chefes em inglês"
+	MRT_L.Options["EP_EQDKP_Plus_XML"] = "EQdkp-Plus XML"
+	MRT_L.Options["EP_EQDKPTitleText"] = "Configurações XML do EQdkp-Plus"
+	MRT_L.Options["EP_HTML"] = "CSS baseado em HTML com links do wowhead"
+	MRT_L.Options["EP_MLDKP_15"] = "MLdkp 1.5"
+	MRT_L.Options["EP_Plain_Text"] = "Texto simples"
+	MRT_L.Options["EP_SetDateTimeFormat"] = "Definir formato de data e hora"
+	MRT_L.Options["EP_TextExportTitleText"] = "Configurações de exportação de texto"
+	MRT_L.Options["EP_Title"] = "Exportar"
+	MRT_L.Options["EP_TitleText"] = "MRT - opções de exportação"
+	MRT_L.Options["ITP_AutoFocus_Always"] = "Sempre"
+	MRT_L.Options["ITP_AutoFocus_Never"] = "Nunca"
+	MRT_L.Options["ITP_AutoFocus_NoCombat"] = "Quando não estiver em combate"
+	MRT_L.Options["ITP_AutoFocus_Title"] = "Foco automático na janela de custo do saque"
+	MRT_L.Options["ITP_IgnoreEnchantingMats"] = "Ignorar materiais de encantamento"
+	MRT_L.Options["ITP_IgnoreGems"] = "Ignorar gemas"
+	MRT_L.Options["ITP_Title"] = "Rastreamento de item"
+	MRT_L.Options["ITP_TitleText"] = "MRT - Opções de rastreamento de itens"
+	MRT_L.Options["ITP_UseEPGP_GP_Values"] = "Use os valores de GP do EPGP"
+	MRT_L.Options["MP_AutoPrunning"] = "Excluir automaticamente raids mais antigas que"
+	MRT_L.Options["MP_Days"] = "dias"
+	MRT_L.Options["MP_Debug"] = "Ativar mensagens de depuração"
+	MRT_L.Options["MP_Description"] = "Rastreia raides, saques e frequência"
+	MRT_L.Options["MP_Enabled"] = "Ativar rastreamento automático"
+	MRT_L.Options["MP_MinimapIcon"] = "Mostrar ícone do mini-mapa"
+	MRT_L.Options["MP_ResetGuiPos"] = "Redefinir a posição da GUI"
+	MRT_L.Options["MP_SlashCmd"] = "Comando de barra"
+	MRT_L.Options["TP_AskForDKPValue"] = "Pedir custo do item"
+	MRT_L.Options["TP_AskForDKPValuePersonal"] = "... se o modo de saque for \"pessoal\""
+	MRT_L.Options["TP_CreateNewRaidOnNewZone"] = "Criar nova raide em nova zona"
+	MRT_L.Options["TP_Log10MenRaids"] = "Rastrear raides de 10 jogadores"
+	MRT_L.Options["TP_LogAVRaids"] = "Rastrear raides de PVP (VoA, BH)"
+	--[[Translation missing --]]
+	MRT_L.Options["TP_LogBCRaids"] = "Track Burning Crusade raids"
+	MRT_L.Options["TP_LogCataclysmRaids"] = "Rastrear raides do Cataclisma"
+	--[[Translation missing --]]
+	MRT_L.Options["TP_LogClassicRaids"] = "Track classic raids"
+	MRT_L.Options["TP_LogLFRRaids"] = "Rastrear raides do LDR"
+	MRT_L.Options["TP_LogLootModePersonal"] = "Rastrear modo de saque \"Pessoal\""
+	MRT_L.Options["TP_LogMoPRaids"] = "Rastrear raides de Pandaria"
+	MRT_L.Options["TP_LogWarlordsRaids"] = "Rastrear raides de Warlords of Draenor"
+	MRT_L.Options["TP_LogWotLKRaids"] = "Rastrear raides de WotLK"
+	MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Qualidade mínima do item para pedir custo"
+	MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "Qualidade mínima do item para registrar (log)"
+	MRT_L.Options["TP_OnlyTrackItemsAbove"] = "Rastrear apenas itens de item level igual ou acima"
+	MRT_L.Options["TP_OnlyTrackItemsBelow"] = "Item level igual ou inferior"
+	MRT_L.Options["TP_Title"] = "Rastreamento de raide"
+	MRT_L.Options["TP_TitleText"] = "MRT - Opções de rastreamento de raide"
+	MRT_L.Options["TP_UseServerTime"] = "Usar o horário do servidor"
+	MRT_L.Options["TT_AP_GA_CustomText"] = [=[Variáveis disponíveis:
+<<BOSS>> - Nome do evento do chefe
+<<TIME>> - Tempo restante da verificação de frequência da guilda
+<<TRIGGER>> - O comando "gatilho" personalizado]=]
+	MRT_L.Options["TT_EP_AddPoorItem"] = [=[Esta opção altera um pouco a exportação de saque para corrigir a detecção 
+de encontros de chefes do CT_RaidTrackerImport. 
+Use isso, se você tiver eventos de chefe na sua raide sem saques associados a ele. 
+(por exemplo, verificações de frequência)]=]
+	MRT_L.Options["TT_EP_DateTimeTT"] = [=[ %d - dia do mês [01-31] 
+ %m - mês [01-12] 
+ %y - ano com dois dígitos [00-99] 
+ %Y - ano completo [2018] 
 
- %H - hour, using a 24-hour clock [00-23] 
- %I - hour, using a 12-hour clock [01-12] 
- %M - minute [00-59] 
- %S - second [00-59] 
- %p - either 'am' or 'pm']=] ]==]
---[==[ MRT_L.Options["TT_EP_RLIAttendanceFix"] = [=[This option changes the export of timestamps a bit to pass 
-the 50% attendance threshold of the Raid-Log-Importer. 
-Only use this option, if your DKP system is based on per boss attendance.]=] ]==]
---[==[ MRT_L.Options["TT_MP_SlashCmd"] = [=[Command without leading slash.
-A relog after changing this value is recommended.]=] ]==]
+ %H - hora, no formato de 24hs [00-23] 
+ %I - hora, no formato de 12hs [01-12] 
+ %M - minuto [00-59] 
+ %S - segundo [00-59] 
+ %p - ou 'am' ou 'pm']=]
+	MRT_L.Options["TT_EP_RLIAttendanceFix"] = [=[Esta opção altera um pouco a exportação de "timestamps" para passar
+o limite de participação de 50% do "Raid-Log-Importer".
+Utilize esta opção apenas se o seu sistema de DKP for baseado em participação por chefe.]=]
+	MRT_L.Options["TT_MP_SlashCmd"] = [=[Comando sem barra.
+É recomendado que você "relogue" depois de alterar este valor.]=]
 
 
 
 -------------------
 --  GUI strings  --
 -------------------
--- MRT_L.GUI["Active raid found. End current one first."] = "Error: Active raid found. Please end the active raid before starting a new one."
--- MRT_L.GUI["Add boss attendee"] = "Add boss attendee"
--- MRT_L.GUI["Add bosskill"] = "Add bosskill"
--- MRT_L.GUI["Add loot data"] = "Add loot data"
--- MRT_L.GUI["Add raid attendee"] = "Add raid attendee"
--- MRT_L.GUI["Bossname"] = "Bossname"
--- MRT_L.GUI["Button_Add"] = "Add"
--- MRT_L.GUI["Button_Delete"] = "Delete"
--- MRT_L.GUI["Button_EndCurrentRaid"] = "End current raid"
--- MRT_L.GUI["Button_Export"] = "Export"
--- MRT_L.GUI["Button_ExportHeroic"] = "Export H"
--- MRT_L.GUI["Button_ExportNormal"] = "Export N"
--- MRT_L.GUI["Button_MakeGuildAttendanceCheck"] = "Make guild attendance check"
--- MRT_L.GUI["Button_Modify"] = "Modify"
--- MRT_L.GUI["Button_ResumeLastRaid"] = "Resume last raid"
--- MRT_L.GUI["Button_StartNewRaid"] = "Start new raid"
--- MRT_L.GUI["Button_TakeSnapshot"] = "Take Snapshot"
--- MRT_L.GUI["Can not delete current raid"] = "Error: Can't delete current raid."
--- MRT_L.GUI["Cell_Hard"] = "Hard"
--- MRT_L.GUI["Cell_Normal"] = "Normal"
--- MRT_L.GUI["Col_Cost"] = "Cost"
--- MRT_L.GUI["Col_Date"] = "Date"
--- MRT_L.GUI["Col_Difficulty"] = "Mode"
--- MRT_L.GUI["Col_Join"] = "Join"
--- MRT_L.GUI["Col_Leave"] = "Leave"
--- MRT_L.GUI["Col_Looter"] = "Looter"
--- MRT_L.GUI["Col_Name"] = "Name"
--- MRT_L.GUI["Col_Num"] = "#"
--- MRT_L.GUI["Col_Size"] = "Size"
--- MRT_L.GUI["Col_Time"] = "Time"
--- MRT_L.GUI["Col_Zone"] = "Zone"
--- MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?"
--- MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?"
--- MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?"
--- MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?"
--- MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?"
--- MRT_L.GUI["Difficulty N or H"] = "Difficulty ('N' or 'H')"
--- MRT_L.GUI["End tracking of current raid before exporting it"] = "Error: Can't export active raid."
--- MRT_L.GUI["Entered join time is not before leave time"] = "Error: Entered join time is not before leave time."
--- MRT_L.GUI["Entered time is not between start and end of raid"] = "Error: Entered time is not between start and end of raid."
--- MRT_L.GUI["Header_Title"] = "MRT - Raidlog"
--- MRT_L.GUI["Item cost invalid"] = "Error: Item cost is not a number."
--- MRT_L.GUI["Itemlink"] = "Itemlink or ItemID or Itemname"
--- MRT_L.GUI["Looter"] = "Looter"
--- MRT_L.GUI["Modify loot data"] = "Modify loot data"
--- MRT_L.GUI["No active raid."] = "Error: No active raid."
--- MRT_L.GUI["No active raid in progress. Please enter time."] = "Error: No active raid in progress. Please enter time."
--- MRT_L.GUI["No boss attendee selected"] = "Error: No boss attendee selected."
--- MRT_L.GUI["No boss name entered"] = "Error: No boss name entered."
--- MRT_L.GUI["No boss selected"] = "Error: No boss selected."
--- MRT_L.GUI["No itemLink found"] = "Error: Itemlink is not valid."
--- MRT_L.GUI["No loot selected"] = "Error: No item selected."
--- MRT_L.GUI["No name entered"] = "Error: No name entered."
--- MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected."
--- MRT_L.GUI["No raid selected"] = "Error: No raid selected."
--- MRT_L.GUI["Note"] = "Note"
--- MRT_L.GUI["No valid difficulty entered"] = "Error: No valid difficulty entered."
--- MRT_L.GUI["No valid raid size"] = "Error: No valid raid size entered."
--- MRT_L.GUI["No valid time entered"] = "Error: No valid time entered."
--- MRT_L.GUI["Player not in raid."] = "Error: You are not in a raid."
--- MRT_L.GUI["Raid size"] = "Raid size"
--- MRT_L.GUI["Resuming last raid failed"] = "Error: Failed to resume last raid"
--- MRT_L.GUI["Resuming last raid successful"] = "Last raid successfully resumed."
--- MRT_L.GUI["Tables_BossAttendeesTitle"] = "Boss attendees"
--- MRT_L.GUI["Tables_BossLootTitle"] = "Boss loot"
--- MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raid attendees"
--- MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raid bosskills"
--- MRT_L.GUI["Tables_RaidLogTitle"] = "Raid list"
--- MRT_L.GUI["Tables_RaidLootTitle"] = "Raid loot"
--- MRT_L.GUI["Time"] = "Time"
---[==[ MRT_L.GUI["TT_Attendee_Add_JoinEB"] = [=[Format HH:MM 
+-- MRT_L/GUI
+	MRT_L.GUI["Active raid found. End current one first."] = "Erro: Raide ativa encontrada. Por favor, finalize a raid ativa antes de começar uma nova."
+	MRT_L.GUI["Add boss attendee"] = "Adicionar freqüência do chefe"
+	MRT_L.GUI["Add bosskill"] = "Adicionar morte do chefe"
+	MRT_L.GUI["Add loot data"] = "Adicionar dados do saque"
+	MRT_L.GUI["Add raid attendee"] = "Adicionar freqüência de raide"
+	MRT_L.GUI["Bossname"] = "Nome do chefe"
+	MRT_L.GUI["Button_Add"] = "Adicionar"
+	MRT_L.GUI["Button_Delete"] = "Excluir"
+	MRT_L.GUI["Button_EndCurrentRaid"] = "Finalizar raid corrente"
+	MRT_L.GUI["Button_Export"] = "Exportar"
+	MRT_L.GUI["Button_ExportHeroic"] = "Exportar H"
+	MRT_L.GUI["Button_ExportNormal"] = "Exportar N"
+	MRT_L.GUI["Button_MakeGuildAttendanceCheck"] = "Faça verificação de comparecimento da guilda"
+	MRT_L.GUI["Button_Modify"] = "Modificar"
+	MRT_L.GUI["Button_ResumeLastRaid"] = "Retomar última raide"
+	MRT_L.GUI["Button_StartNewRaid"] = "Começar nova raide"
+	MRT_L.GUI["Button_TakeSnapshot"] = "Tirar \"Snapshot\""
+	MRT_L.GUI["Can not delete current raid"] = "Erro: Não é possível excluir a raide corrente."
+	MRT_L.GUI["Cell_Hard"] = "Difícil"
+	MRT_L.GUI["Cell_LFR"] = "LDR"
+	MRT_L.GUI["Cell_Normal"] = "Normal"
+	MRT_L.GUI["Col_Cost"] = "Custo"
+	MRT_L.GUI["Col_Date"] = "Data"
+	MRT_L.GUI["Col_Difficulty"] = "Modo"
+	MRT_L.GUI["Col_Join"] = "Entrar"
+	MRT_L.GUI["Col_Leave"] = "Sair"
+	MRT_L.GUI["Col_Looter"] = "Saqueador"
+	MRT_L.GUI["Col_Name"] = "Nome"
+	MRT_L.GUI["Col_Num"] = "#"
+	MRT_L.GUI["Col_Size"] = "Tamanho"
+	MRT_L.GUI["Col_Time"] = "Hora"
+	MRT_L.GUI["Col_Zone"] = "Zona"
+	MRT_L.GUI["Confirm boss attendee entry deletion"] = "Você deseja excluir %s da lista de participantes do chefe?"
+	MRT_L.GUI["Confirm boss entry deletion"] = "Deseja excluir a entrada %d - %s - da lista de morte do chefe?"
+	MRT_L.GUI["Confirm loot entry deletion"] = "Deseja excluir o item %s da lista de saque?"
+	MRT_L.GUI["Confirm raid attendee entry deletion"] = "Você deseja excluir %s da lista de participantes da raide?"
+	MRT_L.GUI["Confirm raid entry deletion"] = "Você deseja excluir a raid de número %d?"
+	MRT_L.GUI["Difficulty N or H"] = "Dificuldade ('N' ou 'H')"
+	MRT_L.GUI["End tracking of current raid before exporting it"] = "Erro: Não é possível exportar a raide ativa."
+	MRT_L.GUI["Entered join time is not before leave time"] = "Erro: O tempo inserido de entrada não é antes do tempo de saída."
+	MRT_L.GUI["Entered time is not between start and end of raid"] = "Erro: O tempo inserido não está entre o início e o fim da raide."
+	MRT_L.GUI["Header_Title"] = "MRT - Log de raide"
+	MRT_L.GUI["Item cost invalid"] = "Erro: O custo do item não é um número."
+	MRT_L.GUI["Itemlink"] = "\"Itemlink\" ou \"ItemID\" ou \"Itemname\""
+	MRT_L.GUI["Looter"] = "Saqueador"
+	MRT_L.GUI["Modify loot data"] = "Modificar dados do saque"
+	MRT_L.GUI["No active raid in progress. Please enter time."] = "Erro: nenhuma raide ativa em andamento. Por favor insira o horário."
+	MRT_L.GUI["No active raid."] = "Erro: nenhuma raide ativa."
+	MRT_L.GUI["No boss attendee selected"] = "Erro: Nenhum participante do chefe foi selecionado."
+	MRT_L.GUI["No boss name entered"] = "Erro: Nenhum nome de chefe inserido."
+	MRT_L.GUI["No boss selected"] = "Erro: Nenhum chefe selecionado."
+	MRT_L.GUI["No itemLink found"] = "Erro: o link do item não é válido."
+	MRT_L.GUI["No loot selected"] = "Erro: Nenhum item selecionado."
+	MRT_L.GUI["No name entered"] = "Erro: Nenhum nome inserido."
+	MRT_L.GUI["No raid attendee selected"] = "Erro: Nenhum participante de raide selecionado."
+	MRT_L.GUI["No raid selected"] = "Error: Nenhuma raide foi selecionada."
+	MRT_L.GUI["No valid difficulty entered"] = "Erro: Nenhuma dificuldade válida inserida."
+	MRT_L.GUI["No valid raid size"] = "Erro: Nenhum tamanho de raide válido foi inserido."
+	MRT_L.GUI["No valid time entered"] = "Erro: Nenhum tempo válido inserido."
+	MRT_L.GUI["Note"] = "Nota"
+	MRT_L.GUI["Player not in raid."] = "Erro: Você não está em um grupo de raide."
+	MRT_L.GUI["Raid size"] = "Tamanho da raide"
+	MRT_L.GUI["Resuming last raid failed"] = "Erro: Não foi possível retomar a última raid"
+	MRT_L.GUI["Resuming last raid successful"] = "A última raid foi retomada com sucesso."
+	MRT_L.GUI["Tables_BossAttendeesTitle"] = "Participantes do chefe"
+	MRT_L.GUI["Tables_BossLootTitle"] = "Saque do boss"
+	MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Participantes da raide"
+	MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Mortes dos chefes de raide"
+	MRT_L.GUI["Tables_RaidLogTitle"] = "Lista de raide"
+	MRT_L.GUI["Tables_RaidLootTitle"] = "Saque da raide"
+	MRT_L.GUI["Time"] = "Tempo"
+	MRT_L.GUI["TT_Attendee_Add_JoinEB"] = [=[Formato HH:MM
 
-If left blank, MRT will use 
-the raid start time.]=] ]==]
---[==[ MRT_L.GUI["TT_Attendee_Add_LeaveEB"] = [=[Format HH:MM 
+Se deixado em branco, o MRT utilizará
+o horário de início da raide.]=]
+	MRT_L.GUI["TT_Attendee_Add_LeaveEB"] = [=[Formato HH:MM
 
-If left blank, MRT will use 
-the raid end time or current time.]=] ]==]
--- MRT_L.GUI["TT_BA_Add"] = "Add an attendee to the boss attendee list."
--- MRT_L.GUI["TT_BA_Delete"] = "Delete selected boss attendee."
--- MRT_L.GUI["TT_Boss_Add"] = "Add a boss encounter."
---[==[ MRT_L.GUI["TT_Boss_Add_TimeEB"] = [=[Format HH:MM 
+Se deixado em branco, o MRT utilizará
+a hora final da raide ou a hora atual.]=]
+	MRT_L.GUI["TT_BA_Add"] = "Adicionar um participante à lista de participantes do chefe."
+	MRT_L.GUI["TT_BA_Delete"] = "Excluir o participante do chefe selecionado."
+	MRT_L.GUI["TT_Boss_Add"] = "Adicionar encontro de chefe."
+	MRT_L.GUI["TT_Boss_Add_TimeEB"] = [=[Formato HH:MM
 
-Leave blank, if you want to add a boss 
-as the most recent of the current raid.]=] ]==]
--- MRT_L.GUI["TT_Boss_Delete"] = "Delete selected boss encounter."
--- MRT_L.GUI["TT_Boss_Export"] = "Export selected boss encounter."
--- MRT_L.GUI["TT_Loot_Add"] = "Add an item to the loot list."
--- MRT_L.GUI["TT_Loot_Delete"] = "Delete selected item."
--- MRT_L.GUI["TT_Loot_Modify"] = "Modify data of selected item."
--- MRT_L.GUI["TT_RA_Add"] = "Add an attendee to the raid attendee list."
--- MRT_L.GUI["TT_RA_Delete"] = "Delete selected raid attendee."
--- MRT_L.GUI["TT_Raid_Delete"] = "Delete selected raid."
--- MRT_L.GUI["TT_Raid_Export"] = "Export selected raid."
--- MRT_L.GUI["TT_Raid_ExportH"] = "Export all heroic mode encounters of selected raid."
--- MRT_L.GUI["TT_Raid_ExportN"] = "Export all normal mode encounters of selected raid."
--- MRT_L.GUI["TT_StartNewRaid_RaidSizeEB"] = "If left blank, MRT will use 25 as the default value."
--- MRT_L.GUI["TT_StartNewRaid_ZoneNameEB"] = "If left blank, MRT will use your current zone."
---[==[ MRT_L.GUI["TT_TakeSnapshot"] = [=[Make a snapshot of the current raidgroup. 
-Doesn't work, if raidtracking is in progress. 
-In that case, add a boss event.]=] ]==]
--- MRT_L.GUI["Value"] = "Value"
--- MRT_L.GUI["Zone name"] = "Zone name"
+Deixe em branco, se você quiser adicionar um chefe
+como o mais recente da raid corrente.]=]
+	MRT_L.GUI["TT_Boss_Delete"] = "Excluir encontro de chefe selecionado."
+	MRT_L.GUI["TT_Boss_Export"] = "Exportar encontro do chefe selecionado."
+	MRT_L.GUI["TT_Loot_Add"] = "Adicionar um item à lista de saque."
+	MRT_L.GUI["TT_Loot_Delete"] = "Excluir item selecionado"
+	MRT_L.GUI["TT_Loot_Modify"] = "Modificar dados do item selecionado."
+	MRT_L.GUI["TT_RA_Add"] = "Adicione um participante à lista de frequência da raide."
+	MRT_L.GUI["TT_RA_Delete"] = "Excluir participante da raide selecionado."
+	MRT_L.GUI["TT_Raid_Delete"] = "Excluir raide selecionada."
+	MRT_L.GUI["TT_Raid_Export"] = "Exportar raide selecionada."
+	MRT_L.GUI["TT_Raid_ExportH"] = "Exportar todos os encontros do modo heróico da raide selecionada."
+	MRT_L.GUI["TT_Raid_ExportN"] = "Exportar todos os encontros do modo normal da raide selecionada."
+	MRT_L.GUI["TT_StartNewRaid_RaidSizeEB"] = "Se deixado em branco, o MRT usará 25 como o valor padrão."
+	MRT_L.GUI["TT_StartNewRaid_ZoneNameEB"] = "Se deixado em branco, o MRT usará sua zona atual."
+	MRT_L.GUI["TT_TakeSnapshot"] = [=[Faça uma "foto rápida" do grupo de raid corrente.
+Não funciona se o rastreamento de raid estiver em progresso.
+Nesse caso, adicione um evento de chefe.]=]
+	MRT_L.GUI["Value"] = "Valor"
+	MRT_L.GUI["Zone name"] = "Nome da zona"
 
 

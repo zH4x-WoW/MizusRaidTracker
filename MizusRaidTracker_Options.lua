@@ -1,10 +1,10 @@
 -- *******************************************************
 -- **            Mizus RaidTracker - Options            **
--- **           <http://nanaki.affenfelsen.de>          **
+-- **              <http://cosmocanyon.de>              **
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2013)
+--    * Mîzukichan @ EU-Antonidas (2010-2018)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -21,6 +21,11 @@
 --    You should have received a copy of the GNU General Public License
 --    along with Mizus RaidTracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
+
+
+-- Check for addon table
+if (not MizusRaidTracker) then MizusRaidTracker = {}; end
+local mrt = MizusRaidTracker
 
 
 --------------
@@ -70,29 +75,37 @@ end
 --------------------------------------------------------
 function MRT_Options_ParseValues()
     -- MainPanel
-    MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
+    MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." "..MRT_ADDON_VERSION);
     MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
     MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
     MRT_Options_MainPanel_Debug_CB_Text:SetText(MRT_L.Options["MP_Debug"]);
     MRT_Options_MainPanel_SlashCmd_EB_Text:SetText(MRT_L.Options["MP_SlashCmd"]);
     MRT_Options_MainPanel_MinimapIcon_CB_Text:SetText(MRT_L.Options["MP_MinimapIcon"]);
     MRT_Options_MainPanel_Prunning_CB_Text:SetText(MRT_L.Options["MP_AutoPrunning"]);
+    MRT_Options_MainPanel_Reset_GUI_Button:SetText(MRT_L.Options["MP_ResetGuiPos"]);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
-    MRT_Options_TrackingPanel_LogLFRRaids_CB_Text:SetText(MRT_L.Options["TP_LogLFRRaids"].." (untested!)");
+    MRT_Options_TrackingPanel_LogLFRRaids_CB_Text:SetText(MRT_L.Options["TP_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogClassicRaids_CB_Text:SetText(MRT_L.Options["TP_LogClassicRaids"]);
+    MRT_Options_TrackingPanel_LogBCRaids_CB_Text:SetText(MRT_L.Options["TP_LogBCRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB_Text:SetText(MRT_L.Options["TP_LogWotLKRaids"]);
+    MRT_Options_TrackingPanel_LogCataclysmRaids_CB_Text:SetText(MRT_L.Options["TP_LogCataclysmRaids"]);
+    MRT_Options_TrackingPanel_LogPandariaRaids_CB_Text:SetText(MRT_L.Options["TP_LogMoPRaids"]);
+    MRT_Options_TrackingPanel_LogWarlordsRaids_CB_Text:SetText(MRT_L.Options["TP_LogWarlordsRaids"]);
+    MRT_Options_TrackingPanel_LogLootModePersonal_CB_Text:SetText(MRT_L.Options["TP_LogLootModePersonal"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- ItemsTrackingPanel
     MRT_Options_ItemsTrackingPanel_Title:SetText(MRT_L.Options["ITP_TitleText"]);
     MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
-    MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
+    MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);
+    MRT_Options_ItemsTrackingPanel_AskForDKPValuePersonal_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValuePersonal"]);
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
-    MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB_Text:SetText(MRT_L.Options["ITP_UseEPGP_GP_Values"].." (experimental!)");
+    MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB_Text:SetText(MRT_L.Options["ITP_UseEPGP_GP_Values"]);
     MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_Title:SetText(MRT_L.Options["ITP_AutoFocus_Title"]);
     MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
     MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB_Text:SetText(MRT_L.Options["ITP_IgnoreEnchantingMats"]);
@@ -153,15 +166,22 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogLFRRaids"] = MRT_Options_TrackingPanel_LogLFRRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogClassicRaids"] = MRT_Options_TrackingPanel_LogClassicRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogBCRaids"] = MRT_Options_TrackingPanel_LogBCRaids_CB:GetChecked();
     MRT_Options["Tracking_LogWotLKRaids"] = MRT_Options_TrackingPanel_LogWotLKRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogCataclysmRaids"] = MRT_Options_TrackingPanel_LogCataclysmRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogMoPRaids"] = MRT_Options_TrackingPanel_LogPandariaRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogWarlordsRaids"] = MRT_Options_TrackingPanel_LogWarlordsRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogLootModePersonal"] = MRT_Options_TrackingPanel_LogLootModePersonal_CB:GetChecked();
     MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- ItemsTrackingPanel
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:GetChecked();
+    MRT_Options["Tracking_AskForDKPValuePersonal"] = MRT_Options_ItemsTrackingPanel_AskForDKPValuePersonal_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     MRT_Options["ItemTracking_UseEPGPValues"] = MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB:GetChecked();
-    MRT_Options["Tracking_AskCostAutoFocus"] = UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
+    MRT_Options["Tracking_AskCostAutoFocus"] = MRT_Lib_UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
     MRT_Options["ItemTracking_IgnoreEnchantingMats"] = MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB:GetChecked();
     MRT_Options["ItemTracking_IgnoreGems"] = MRT_Options_ItemsTrackingPanel_IgnoreGems_CB:GetChecked();
     -- sanity check min item level
@@ -183,7 +203,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Attendance_GuildAttendanceUseCustomText"] = MRT_Options_AttendancePanel_GA_UseCustomText_CB:GetChecked();
     MRT_Options["Attendance_GuildAttendanceCustomText"] = MRT_Options_AttendancePanel_GA_CustomText_EB:GetText();
     -- ExportPanel
-    MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
+    MRT_Options["Export_ExportFormat"] = MRT_Lib_UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_ExportEnglish"] = MRT_Options_ExportPanel_EnglishExport_CB:GetChecked();
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
@@ -222,13 +242,20 @@ function MRT_Options_RestoreValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogLFRRaids_CB:SetChecked(MRT_Options["Tracking_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogClassicRaids_CB:SetChecked(MRT_Options["Tracking_LogClassicRaids"]);
+    MRT_Options_TrackingPanel_LogBCRaids_CB:SetChecked(MRT_Options["Tracking_LogBCRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB:SetChecked(MRT_Options["Tracking_LogWotLKRaids"]);
+    MRT_Options_TrackingPanel_LogCataclysmRaids_CB:SetChecked(MRT_Options["Tracking_LogCataclysmRaids"]);
+    MRT_Options_TrackingPanel_LogPandariaRaids_CB:SetChecked(MRT_Options["Tracking_LogMoPRaids"]);
+    MRT_Options_TrackingPanel_LogWarlordsRaids_CB:SetChecked(MRT_Options["Tracking_LogWarlordsRaids"]);
+    MRT_Options_TrackingPanel_LogLootModePersonal_CB:SetChecked(MRT_Options["Tracking_LogLootModePersonal"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     -- ItemsTrackingPanel
     MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
     MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
     MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
+    MRT_Options_ItemsTrackingPanel_AskForDKPValuePersonal_CB:SetChecked(MRT_Options["Tracking_AskForDKPValuePersonal"]);
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
@@ -290,13 +317,22 @@ function MRT_Options_AP_GADuration_Slider()
 end
 
 
+----------------------
+--  Button handler  --
+----------------------
+function MRT_Options_MainPanel_ResetGUIPos()
+    MRT_GUIFrame:ClearAllPoints();
+    MRT_GUIFrame:SetPoint("CENTER", UIParent, "CENTER");
+end
+
+
 ------------------------
 --  Create functions  --
 ------------------------
 function MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu) then
-        CreateFrame("Frame", "MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu", MRT_Options_ItemsTrackingPanel, "UIDropDownMenuTemplate");
+        CreateFrame("Frame", "MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu", MRT_Options_ItemsTrackingPanel, "MRT_Lib_UIDropDownMenuTemplate");
     end
     -- Anchor DropDownFrame
     MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu:ClearAllPoints();
@@ -310,31 +346,31 @@ function MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu()
     }
     -- Click handler function
     local function OnClick(self)
-       UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, self:GetID())
+       MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, self:GetID())
     end
     -- DropDownMenu initialize function
     local function initialize(self, level)
-        local info = UIDropDownMenu_CreateInfo()
+        local info = MRT_Lib_UIDropDownMenu_CreateInfo()
         for k,v in pairs(items) do
-            info = UIDropDownMenu_CreateInfo()
+            info = MRT_Lib_UIDropDownMenu_CreateInfo()
             info.text = v
             info.value = v
             info.func = OnClick
-            UIDropDownMenu_AddButton(info, level)
+            MRT_Lib_UIDropDownMenu_AddButton(info, level)
         end
     end
     -- Setup DropDownMenu
-    UIDropDownMenu_Initialize(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, initialize);
-    UIDropDownMenu_SetWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 200);
-    UIDropDownMenu_SetButtonWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 224);
-    UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
-    UIDropDownMenu_JustifyText(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, "LEFT");
+    MRT_Lib_UIDropDownMenu_Initialize(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, initialize);
+    MRT_Lib_UIDropDownMenu_SetWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 200);
+    MRT_Lib_UIDropDownMenu_SetButtonWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 224);
+    MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
+    MRT_Lib_UIDropDownMenu_JustifyText(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, "LEFT");
 end
 
 function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ExportPanel_ChooseExport_DropDownMenu) then
-        CreateFrame("Frame", "MRT_Options_ExportPanel_ChooseExport_DropDownMenu", MRT_Options_ExportPanel, "UIDropDownMenuTemplate");
+        CreateFrame("Frame", "MRT_Options_ExportPanel_ChooseExport_DropDownMenu", MRT_Options_ExportPanel, "MRT_Lib_UIDropDownMenuTemplate");
     end
     -- Anchor DropDownFrame
     MRT_Options_ExportPanel_ChooseExport_DropDownMenu:ClearAllPoints();
@@ -353,25 +389,25 @@ function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     }
     -- Click handler function
     local function OnClick(self)
-       UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, self:GetID())
+       MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, self:GetID())
     end
     -- DropDownMenu initialize function
     local function initialize(self, level)
-        local info = UIDropDownMenu_CreateInfo()
+        local info = MRT_Lib_UIDropDownMenu_CreateInfo()
         for k,v in pairs(items) do
-            info = UIDropDownMenu_CreateInfo()
+            info = MRT_Lib_UIDropDownMenu_CreateInfo()
             info.text = v
             info.value = v
             info.func = OnClick
-            UIDropDownMenu_AddButton(info, level)
+            MRT_Lib_UIDropDownMenu_AddButton(info, level)
         end
     end
     -- Setup DropDownMenu
-    UIDropDownMenu_Initialize(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, initialize);
-    UIDropDownMenu_SetWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 250);
-    UIDropDownMenu_SetButtonWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 224);
-    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
-    UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
+    MRT_Lib_UIDropDownMenu_Initialize(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, initialize);
+    MRT_Lib_UIDropDownMenu_SetWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 250);
+    MRT_Lib_UIDropDownMenu_SetButtonWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 224);
+    MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
+    MRT_Lib_UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
 end
 
 
